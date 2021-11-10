@@ -3,6 +3,8 @@ from sys import exit
 
 from random import randint
 import numpy as np
+from pygame import surface
+from pygame import transform
 from pygame.constants import MOUSEBUTTONDOWN
 
 
@@ -17,8 +19,9 @@ class Vista:
         self.celdasPantallaTotalHorizontal = celdasPantallaTotalHorizontal #40 celdas que entran horizontal en la pantalla
         self.celdasPantallaTotalVertical = celdasPantallaTotalVertical #20 celdas que entran vertical en la pantalla
         self.mapa = mapa_actual
+        self.fuente= pygame.font.SysFont("Gill Sans",60, bold=True, italic=False)
+        self.fuente_secundaria=  pygame.font.SysFont("Gill Sans", 30, bold=False, italic=False)
         self.setear_pantalla()
-        self.setear_fotos()
         self.cargar_sprites()
         
         
@@ -30,14 +33,7 @@ class Vista:
         self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
         self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
 
-    def setear_fotos(self):
-        """Cargo todas las fotos en las variables"""
-        self.fondoAgua = self.cargar_foto('imagenes/agua.jpg')
-        self.fondoMont = self.cargar_foto('imagenes/piedra3.png')
-        self.fondoTier = self.cargar_foto('imagenes/tierra.png')
-        self.arbol = self.cargar_foto('imagenes/arbolrefull.png')
-        self.hombre = self.cargar_foto('Tropas y personajes/3 Man/Man.png')
-        self.manWalk = self.cargar_foto('Tropas y personajes/3 Man/Man_Walk.png')
+   
 
 
     def cargar_sprites(self):
@@ -105,19 +101,40 @@ class Vista:
         self.screen.blit(texto_objeto, texto_rect)
         
     def menu_principal(self):
-      # self.screen.blit('menu',20 ,20)
-      # self.escribir_texto('hola', (255,255,255),self.screen, 20, 20)
-       fuente= pygame.font.SysFont("Gill Sans",60, bold=True, italic=False)
-       fuente_secundaria=  pygame.font.SysFont("Gill Sans", 30, bold=False, italic=False)
-       texto_titulo= fuente.render("CIVILIZATION", True, (0,0,255))
-       texto_jugar= fuente_secundaria.render("jugar", True, (0,0,255))
+       click=pygame.mouse.get_pressed()
+        
+       azul=(0,0,200)
+       fondo= pygame.image.load('Imagenes/fondoPrincipal.jpg')
+       boton_rectangular= pygame.image.load('Imagenes/boton_rectangular.png')
+       boton_rectangular_escalado= transform.scale(boton_rectangular,(230,50))
+       fondo_escalado= transform.scale(fondo,(800,400))
+       boton_jugar= (280,150,215,35)
+       boton_como= (280,250,215,35)
+       texto_titulo= self.fuente.render("CIVILIZATION", True, azul)
+       texto_jugar= self.fuente_secundaria.render("jugar", True, azul)
+       texto_ayuda= self.fuente_secundaria.render("como se juega",True,azul)
     
-
-
-
+       self.screen.blit(fondo_escalado,(0,0)) 
+       pygame.draw.rect(self.screen,(255,255,255), boton_jugar)
+       pygame.draw.rect(self.screen,(255,255,255), boton_como) 
+       self.screen.blit(boton_rectangular_escalado,(270,145))
+       self.screen.blit(boton_rectangular_escalado,(270,245))
        self.screen.blit( texto_titulo,(200,10))
-       self.screen.blit(texto_jugar,(200,50))
+       self.screen.blit(texto_jugar,(350,150))
+       self.screen.blit(texto_ayuda,(300,250))
 
+       for event in pygame.event.get():
+           if event.type == pygame.MOUSEBUTTONDOWN:
+               pass  
+       
+
+    def menu_mapa(self):
+       # boton= Rect('''medida a ver''')
+        imagen_maparandom= '''pygame.image.load()'''
+        imagen_no_mapas= '''pygame.image.load()'''
+        texto_random= self.fuente.render("RANDOM", True, (255,0,0))
+        
+        self.screen.blit(texto_random,(50,400))
 
 
 

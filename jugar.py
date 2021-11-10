@@ -18,6 +18,7 @@ class Juego:
 
     def jugar(self): 
         while True:   
+            self.vista.menu_principal()
             for event in pygame.event.get():
                 rightClicking = False
                 if event.type == pygame.QUIT:
@@ -33,7 +34,7 @@ class Juego:
 
             #self.vista.mostrar_mapa()
             #self.vista.mostrar_jugador()            
-            self.vista.menu_principal()
+           
 
             pygame.display.flip()
             pygame.display.update()
