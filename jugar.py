@@ -11,14 +11,18 @@ class Juego:
         self.celdasPantallaTotalHorizontal = self.anchoLargoPantalla[0] // self.tamanioFotoCelda #40 
         self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
-        self.vista = Vista(self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla)
-
+        self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla)
+        self.juego_empezo = False
         self.jugar()
  
-
-    def jugar(self): 
-        while True:   
-            self.vista.menu_principal()
+    def empezar_juego(self):
+        self.juego_empezo = True
+    
+    def jugar(self):
+        while True: 
+            if not self.juego_empezo:
+                self.vista.menu_principal()
+            
             for event in pygame.event.get():
                 rightClicking = False
                 if event.type == pygame.QUIT:

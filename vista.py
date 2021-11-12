@@ -11,7 +11,7 @@ from pygame.constants import MOUSEBUTTONDOWN
 
 
 class Vista:
-    def __init__(self, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
+    def __init__(self, controlador, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1]))
         pygame.display.set_caption('Civilization')
@@ -23,6 +23,7 @@ class Vista:
         self.fuente_secundaria=  pygame.font.SysFont("Gill Sans", 30, bold=False, italic=False)
         self.setear_pantalla()
         self.cargar_sprites()
+        self.controlador = controlador
         
         
 
@@ -95,14 +96,27 @@ class Vista:
 
 
 
-    #def escribir_texto(self,texto, color, pantalla, x, y):
-        texto_objeto = pygame.font.render(texto, 1, color)
-        texto_rect= texto_objeto.pygame.freetype.get_rect(texto, rotation=0, size=4)
-        self.screen.blit(texto_objeto, texto_rect)
+    
+    
+    def boton(self,x,y,w,h,action=None,pantalla="none"):
+        """Crea una zona en la pantalla que si recibe un click hace una accion"""
+        mouse= self.get_mouse_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x+w > mouse[0] > x and y+h > mouse[1] > y:
+            
+            if click[0] == 1 != None: 
+                if pantalla=="jugar":
+                    self.mostrar_mapa()
+                    self.controlador.empezar_juego()
+                if pantalla=="como_jugar":
+                    pass
+                if pantalla=="prejuego":
+                    pass
         
     def menu_principal(self):
-       click=pygame.mouse.get_pressed()
         
+       click=pygame.mouse.get_pressed()
        azul=(0,0,200)
        fondo= pygame.image.load('Imagenes/fondoPrincipal.jpg')
        boton_rectangular= pygame.image.load('Imagenes/boton_rectangular.png')
@@ -113,7 +127,7 @@ class Vista:
        texto_titulo= self.fuente.render("CIVILIZATION", True, azul)
        texto_jugar= self.fuente_secundaria.render("jugar", True, azul)
        texto_ayuda= self.fuente_secundaria.render("como se juega",True,azul)
-    
+
        self.screen.blit(fondo_escalado,(0,0)) 
        pygame.draw.rect(self.screen,(255,255,255), boton_jugar)
        pygame.draw.rect(self.screen,(255,255,255), boton_como) 
@@ -122,19 +136,20 @@ class Vista:
        self.screen.blit( texto_titulo,(200,10))
        self.screen.blit(texto_jugar,(350,150))
        self.screen.blit(texto_ayuda,(300,250))
+       self.boton(280,150,215,35,action=click, pantalla="jugar")
+       #for event in pygame.event.get():
+           #if event.type == pygame.MOUSEBUTTONDOWN:
+               #pass  
 
-       for event in pygame.event.get():
-           if event.type == pygame.MOUSEBUTTONDOWN:
-               pass  
        
 
-    def menu_mapa(self):
+    #def menu_mapa(self):
        # boton= Rect('''medida a ver''')
-        imagen_maparandom= '''pygame.image.load()'''
-        imagen_no_mapas= '''pygame.image.load()'''
-        texto_random= self.fuente.render("RANDOM", True, (255,0,0))
+        #imagen_maparandom= '''pygame.image.load()'''
+        #imagen_no_mapas= '''pygame.image.load()'''
+        #texto_random= self.fuente.render("RANDOM", True, (255,0,0))
         
-        self.screen.blit(texto_random,(50,400))
+        #self.screen.blit(texto_random,(50,400))
 
 
-
+            
