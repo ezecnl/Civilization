@@ -13,14 +13,20 @@ class Juego:
         self.mapa = Mapa() # es el modelo
         self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla)
         self.juego_empezo = False
+        self.ir_mapas= False
         self.jugar()
  
     def empezar_juego(self):
         self.juego_empezo = True
-    
+
+    def menu_mapa(self):
+        self.ir_mapas= True
+
     def jugar(self):
         while True: 
-            if not self.juego_empezo:
+            if not self.juego_empezo:#para que los menus se queden en la pantalla
+               self.vista.menu_mapa()
+            if not self.ir_mapas:
                 self.vista.menu_principal()
             
             for event in pygame.event.get():

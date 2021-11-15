@@ -24,6 +24,7 @@ class Vista:
         self.setear_pantalla()
         self.cargar_sprites()
         self.controlador = controlador
+        self.click=pygame.mouse.get_pressed()
         
         
 
@@ -34,7 +35,6 @@ class Vista:
         self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
         self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
 
-   
 
 
     def cargar_sprites(self):
@@ -112,44 +112,55 @@ class Vista:
                 if pantalla=="como_jugar":
                     pass
                 if pantalla=="prejuego":
-                    pass
+                    self.menu_mapa()
+                    self.controlador.menu_mapa()
+                    
         
     def menu_principal(self):
         
-       click=pygame.mouse.get_pressed()
+       
        azul=(0,0,200)
        fondo= pygame.image.load('Imagenes/fondoPrincipal.jpg')
        boton_rectangular= pygame.image.load('Imagenes/boton_rectangular.png')
        boton_rectangular_escalado= transform.scale(boton_rectangular,(230,50))
        fondo_escalado= transform.scale(fondo,(800,400))
-       boton_jugar= (280,150,215,35)
-       boton_como= (280,250,215,35)
+       #boton_jugar= (280,150,215,35)
+       #boton_como= (280,250,215,35)
        texto_titulo= self.fuente.render("CIVILIZATION", True, azul)
        texto_jugar= self.fuente_secundaria.render("jugar", True, azul)
        texto_ayuda= self.fuente_secundaria.render("como se juega",True,azul)
 
        self.screen.blit(fondo_escalado,(0,0)) 
-       pygame.draw.rect(self.screen,(255,255,255), boton_jugar)
-       pygame.draw.rect(self.screen,(255,255,255), boton_como) 
+       #pygame.draw.rect(self.screen,(255,255,255), boton_jugar)
+       #pygame.draw.rect(self.screen,(255,255,255), boton_como) 
        self.screen.blit(boton_rectangular_escalado,(270,145))
        self.screen.blit(boton_rectangular_escalado,(270,245))
        self.screen.blit( texto_titulo,(200,10))
        self.screen.blit(texto_jugar,(350,150))
        self.screen.blit(texto_ayuda,(300,250))
-       self.boton(280,150,215,35,action=click, pantalla="jugar")
-       #for event in pygame.event.get():
-           #if event.type == pygame.MOUSEBUTTONDOWN:
-               #pass  
+       self.boton(280,150,215,35,action=self.click, pantalla="prejuego")
+       self.boton(280,250,215,35,action=self.click, pantalla="como_jugar")
 
        
 
-    #def menu_mapa(self):
-       # boton= Rect('''medida a ver''')
-        #imagen_maparandom= '''pygame.image.load()'''
-        #imagen_no_mapas= '''pygame.image.load()'''
-        #texto_random= self.fuente.render("RANDOM", True, (255,0,0))
+    def menu_mapa(self):
+        fondo_boton=pygame.image.load('Imagenes/fondo_mapa.jpg')
+        mapa_aleatorio= pygame.image.load('Imagenes/boton_mapa_aleatorio.png')
+        mapa1=pygame.image.load('Imagenes/mapa1_boton.jpg')
+        mapa2= pygame.image.load('Imagenes/mapa2_boton.jpg')
+       
+        mapa_aleatorio_escalado= transform.scale(mapa_aleatorio,(200,300))
+        mapa1_escalado= transform.scale(mapa1,(200,300))
+        mapa2_escalado= transform.scale(mapa2,(200,300))
+        fondo_escalado= transform.scale(fondo_boton,(800,400))
+
+        self.boton(50,50,200,300,action=self.click, pantalla="jugar")
+        self.screen.blit(fondo_escalado,(0,0))
+        self.screen.blit(mapa_aleatorio_escalado,(50,50))
+        self.screen.blit(mapa1_escalado,(300,50))
+        self.screen.blit(mapa2_escalado,(550,50))
         
-        #self.screen.blit(texto_random,(50,400))
+        
 
 
             
