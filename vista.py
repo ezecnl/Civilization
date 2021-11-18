@@ -98,21 +98,19 @@ class Vista:
 
     
     
-    def boton(self,x,y,w,h,action=None,pantalla="none"):
+    def boton(self,posx,posy,ancho,altura,action=None,pantalla="none"):
         """Crea una zona en la pantalla que si recibe un click hace una accion"""
         mouse= self.get_mouse_pos()
         click = pygame.mouse.get_pressed()
 
-        if x+w > mouse[0] > x and y+h > mouse[1] > y:
+        if posx+ancho > mouse[0] > posx and posy+altura > mouse[1] > posy:
             
             if click[0] == 1 != None: 
                 if pantalla=="jugar":
-                    self.mostrar_mapa()
                     self.controlador.empezar_juego()
                 if pantalla=="como_jugar":
                     pass
                 if pantalla=="prejuego":
-                    self.menu_mapa()
                     self.controlador.menu_mapa()
                     
         
@@ -154,8 +152,9 @@ class Vista:
         mapa2_escalado= transform.scale(mapa2,(200,300))
         fondo_escalado= transform.scale(fondo_boton,(800,400))
 
-        self.boton(50,50,200,300,action=self.click, pantalla="jugar")
+        
         self.screen.blit(fondo_escalado,(0,0))
+        self.boton(50,50,200,300,action=self.click, pantalla="jugar")
         self.screen.blit(mapa_aleatorio_escalado,(50,50))
         self.screen.blit(mapa1_escalado,(300,50))
         self.screen.blit(mapa2_escalado,(550,50))

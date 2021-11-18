@@ -27,8 +27,13 @@ class Personaje:
     def get_pos(self):
         return self.posY, self.posX
     
-    def mover_personaje(self, posicionNueva):
+    def mover_personaje(self, posicionNueva,mapa):
         """Cargo la nueva posicion para luego moverme por el mapa"""
+        elmapa=mapa.get_mapa()
+        laceldaanterior=elmapa[self.posY][self.posX]
+        laceldaanterior.eliminar_personaje()
         self.posY = posicionNueva[1]
         self.posX = posicionNueva[0]
-        # TODO:falta terminar lo de moverse
+        laceldanueva=elmapa[self.posY][self.posX]
+        laceldanueva.set_personaje(self)
+        

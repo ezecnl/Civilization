@@ -26,6 +26,10 @@ class Juego:
         while True: 
             if not self.juego_empezo:#para que los menus se queden en la pantalla
                self.vista.menu_mapa()
+            else:
+                self.vista.mostrar_mapa()
+                
+
             if not self.ir_mapas:
                 self.vista.menu_principal()
             
@@ -37,13 +41,14 @@ class Juego:
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1:
-                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion())
-                    elif event.button == 3: 
+                    if event.button == 3:
+                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
+                    elif event.button == 1: 
                         pass
-
-            #self.vista.mostrar_mapa()
-            #self.vista.mostrar_jugador()            
+                
+            self.vista.mostrar_jugador()  
+            
+                      
            
 
             pygame.display.flip()

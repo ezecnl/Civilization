@@ -35,6 +35,9 @@ class Celda:
     def set_personaje(self, personaje):
         self.personaje = personaje
 
+    def eliminar_personaje(self):
+        self.personaje=None
+
     def get_personaje(self):
         return self.personaje
     

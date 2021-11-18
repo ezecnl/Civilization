@@ -9,7 +9,7 @@ from personaje import Personaje
 
 
 class Mapa():
-    def __init__(self, celdastotaleXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100) -> None:
+    def __init__(self, celdastotaleXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100):
         self.centroPantallaY = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroPantallaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
@@ -48,6 +48,7 @@ class Mapa():
             
 
     def get_mapa(self):
+        """devuelve el mapa creado"""
         return self.mapa
 
 
@@ -88,6 +89,7 @@ class Mapa():
         return self.mapa[y][x]
 
     def get_personaje(self):
+        """Devuelve al personaje que tiene la clase mapa"""
         return self.personaje
     
     def un_set_personaje(self):
