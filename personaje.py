@@ -28,7 +28,7 @@ class Personaje:
         return self.posY, self.posX
     
     def mover_personaje(self, posicionNueva,mapa):
-        """Cargo la nueva posicion para luego moverme por el mapa"""
+        """Elimino al personaje de su celda anterior para moverlo a la nueva"""
         elmapa=mapa.get_mapa()
         laceldaanterior=elmapa[self.posY][self.posX]
         laceldaanterior.eliminar_personaje()

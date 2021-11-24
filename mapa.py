@@ -14,9 +14,14 @@ class Mapa():
         self.centroPantallaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion 
-        spawn = self.playerSpawn(celdastotaleXPantalla, celdastotalesYPantalla)     
-        self.personaje = Personaje(spawn)
-        self.mapa[spawn[0]][spawn[1]].set_personaje(self.personaje)
+        self.personaje = self.crear_personaje(celdastotaleXPantalla,celdastotalesYPantalla)
+        
+
+    def crear_personaje(self, celdas_totales_pantallax, celdas_totales_pantallay):
+         spawn = self.playerSpawn(celdas_totales_pantallax,celdas_totales_pantallay) #aparece en el centro de una celda
+         objeto_personaje= Personaje(spawn) #al objeto personaje se le pasa la posicion de spawn
+         self.mapa[spawn[0]][spawn[1]].set_personaje(objeto_personaje)#setea al objeto personaje en una celda predeterminada
+         return objeto_personaje
 
     def maximo_minimo_pantalla(self):
 
@@ -86,15 +91,15 @@ class Mapa():
    
     
     def get_item(self, y, x):
+        """devuelve lo que haya en una celda especifica"""
         return self.mapa[y][x]
 
     def get_personaje(self):
         """Devuelve al personaje que tiene la clase mapa"""
         return self.personaje
     
-    def un_set_personaje(self):
-        self.personaje = None
-
+    
+    
 
     def set_centro_pantalla_y(self, numeroNuevoY):
         """Se setea el nuevo centro de la pantalla en el eje Y"""

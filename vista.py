@@ -41,12 +41,13 @@ class Vista:
         """Se cargan todos los sprites"""
         for fila in self.mapa.get_mapa():
             for celda in fila:
-                celda.set_sprite(self.cargar_foto(celda.get_url_imagen()))
+                celda.set_sprite(self.cargar_foto(celda.get_url_imagen()))#setea la imagen escalada
                 recurso = celda.get_recurso()
                 if recurso != None:
                     recurso.set_sprite(self.cargar_foto(recurso.get_url_imagen()))
-        personaje = self.mapa.get_personaje()
-        personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
+                personaje = celda.get_personaje()
+                if personaje != None:
+                    personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
 
 
     def cargar_foto(self, imagen):
@@ -56,9 +57,9 @@ class Vista:
         return (fotoEscalada)
     
 
-    def mostrar_jugador(self):
+   # def mostrar_jugador(self):
         # spawn del jugador
-        personaje = self.mapa.get_personaje()
+        personaje = self.mapa.get_personaje()#llamo al personaje que creo la clase mapa
         self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
 
     def set_nuevos_limites(self):

@@ -41,12 +41,15 @@ class Juego:
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 3:
-                        self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
+                    if event.button == 3:                       
+                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
+                            self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
+                            
+                         
                     elif event.button == 1: 
                         pass
                 
-            self.vista.mostrar_jugador()  
+            
             
                       
            

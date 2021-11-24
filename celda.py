@@ -38,6 +38,13 @@ class Celda:
     def eliminar_personaje(self):
         self.personaje=None
 
+    def isSpawn (self):
+        if self.recurso:
+            return False
+        else:
+            return True
+
+
     def get_personaje(self):
         return self.personaje
     
