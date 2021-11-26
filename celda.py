@@ -27,7 +27,7 @@ class Celda:
         pass
     
     def visibilizar(self):
-        self.visible = True
+        self.visible = False
     
     def get_recurso(self):
         return self.recurso
@@ -39,10 +39,10 @@ class Celda:
         self.personaje=None
 
     def isSpawn (self):
-        if self.recurso:
-            return False
-        else:
+        if not self.recurso:
             return True
+        else:
+            return False
 
 
     def get_personaje(self):

@@ -11,9 +11,10 @@ class Juego:
         self.celdasPantallaTotalHorizontal = self.anchoLargoPantalla[0] // self.tamanioFotoCelda #40 
         self.celdasPantallaTotalVertical = self.anchoLargoPantalla[1] // self.tamanioFotoCelda #20
         self.mapa = Mapa() # es el modelo
-        self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla)
+        self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
         self.juego_empezo = False
         self.ir_mapas= False
+        
         self.jugar()
  
     def empezar_juego(self):
@@ -33,18 +34,21 @@ class Juego:
             if not self.ir_mapas:
                 self.vista.menu_principal()
             
+
             for event in pygame.event.get():
-                rightClicking = False
+                
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
+                    self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3:                       
                         if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
                             self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
-                            
+                            #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
+                            print(self.mapa.get_personaje().get_pos())
                          
                     elif event.button == 1: 
                         pass
@@ -74,11 +78,22 @@ class Juego:
     def mouse_posicion(self):
         """Saco la posicion del mouse y la transformo a celda para luego mover al personaje"""
         posXMouse, posYMouse = self.vista.get_mouse_pos()
-        posXCeldas = (posXMouse//self.tamanioFotoCelda) # Lo escala al tamaño de las celdas
-        posYCeldas = (posYMouse//self.tamanioFotoCelda)
+        celdasX= self.celdasPantallaTotalHorizontal//2
+        celdasY= self.celdasPantallaTotalVertical//2
+        posXCeldas = (posXMouse//self.tamanioFotoCelda)+self.largoMinimo # Lo escala al tamaño de las celdas
+        posYCeldas = (posYMouse//self.tamanioFotoCelda)+self.anchoMinimo
+        
+        
         #Todo: falta terminar lo de moverse del personaje
         return (posXCeldas , posYCeldas)
 
+    def setear_pantalla(self):
+        """Se setea los limites de la pantalla la cual va a ver el usuario"""
+        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
+        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
+        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
+        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
+        return self.anchoMinimo, self.anchoMaximo, self.largoMinimo, self.largoMaximo
           
 
 juego = Juego()

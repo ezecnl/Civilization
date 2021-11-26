@@ -11,7 +11,7 @@ from pygame.constants import MOUSEBUTTONDOWN
 
 
 class Vista:
-    def __init__(self, controlador, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla) -> None:
+    def __init__(self, controlador, mapa_actual, celdasPantallaTotalHorizontal, celdasPantallaTotalVertical, tamanioFotoCelda, anchoLargoPantalla,limites) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode((anchoLargoPantalla[0],anchoLargoPantalla[1]))
         pygame.display.set_caption('Civilization')
@@ -21,20 +21,19 @@ class Vista:
         self.mapa = mapa_actual
         self.fuente= pygame.font.SysFont("Gill Sans",60, bold=True, italic=False)
         self.fuente_secundaria=  pygame.font.SysFont("Gill Sans", 30, bold=False, italic=False)
-        self.setear_pantalla()
+        self.limites_actualizados(limites)
         self.cargar_sprites()
         self.controlador = controlador
         self.click=pygame.mouse.get_pressed()
         
         
 
-    def setear_pantalla(self):
-        """Se setea los limites de la pantalla la cual va a ver el usuario"""
-        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
-        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
-        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
-        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
-
+    
+    def limites_actualizados(self,limites):
+        self.anchoMinimo= limites[0]
+        self.anchoMaximo= limites[1]
+        self.largoMinimo= limites[2]
+        self.largoMaximo= limites[3]
 
 
     def cargar_sprites(self):
@@ -57,22 +56,14 @@ class Vista:
         return (fotoEscalada)
     
 
-   # def mostrar_jugador(self):
-        # spawn del jugador
-        personaje = self.mapa.get_personaje()#llamo al personaje que creo la clase mapa
-        self.screen.blit(personaje.get_sprite(), (personaje.get_pos()[1] * self.tamañoFotoCelda, personaje.get_pos()[0] * self.tamañoFotoCelda))
 
-    def set_nuevos_limites(self):
-        """Seteo los nuevos limites para redibujar el mapa"""
-        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) 
-        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) 
-        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) 
-        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2)       
+
+          
 
     def mostrar_mapa(self):
         """Dibujo el mapa con todos los sprites juntos"""  
         forY = 0
-        self.set_nuevos_limites()
+        
         for y in range(self.anchoMinimo, self.anchoMaximo):
             forX = 0
             for x in range(self.largoMinimo, self.largoMaximo):
@@ -83,7 +74,8 @@ class Vista:
                 except:
                     pass
                 try:
-                    self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda, forY  * self.tamañoFotoCelda))
+                    self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda , forY  * self.tamañoFotoCelda))
+                    
                 except:
                    pass
 
@@ -95,7 +87,9 @@ class Vista:
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
 
+    def dibujar_personaje(self,posX,posY):
 
+        self.screen.blit(self.mapa.get_personaje().get_sprite(),(posX,posY))
 
     
     

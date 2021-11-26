@@ -9,6 +9,7 @@ from personaje import Personaje
 
 
 class Mapa():
+    #es el modelo
     def __init__(self, celdastotaleXPantalla = 40, celdastotalesYPantalla = 20 ,cantidadFilas = 100, cantidadColumnas = 100):
         self.centroPantallaY = cantidadFilas // 2 # Se divide para obtener el centro de la matriz, que es 100x100 
         self.centroPantallaX = cantidadColumnas // 2
@@ -27,10 +28,10 @@ class Mapa():
 
         """Establezco los limites para no pasarme a la hora de mover la camara"""
         self.maxPositivaY = 90
-        self.minNegativoY = 20
+        self.minNegativoY = 10
 
         self.maxPositivaX = 80
-        self.minNegativoX = 10
+        self.minNegativoX = 20
     
 
     def generarMapa(self, fil, col, val):

@@ -34,6 +34,12 @@ class Personaje:
         laceldaanterior.eliminar_personaje()
         self.posY = posicionNueva[1]
         self.posX = posicionNueva[0]
+
+        #mapa.descubirMapa(self.posY,self.posX,self.celdas_visibles)
+
         laceldanueva=elmapa[self.posY][self.posX]
         laceldanueva.set_personaje(self)
+        
+        
+        
         
