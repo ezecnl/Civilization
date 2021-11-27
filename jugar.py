@@ -44,14 +44,16 @@ class Juego:
                     self.movimiento_pantalla(event.key)
                     self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 3:                       
-                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
-                            self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
-                            #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
-                            print(self.mapa.get_personaje().get_pos())
+                    if event.button == 3:
+                        if self.juego_empezo== True:
+
+                            if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
+                                self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
+                                #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
+                                print(self.mapa.get_personaje().get_pos())
                          
                     elif event.button == 1: 
-                        pass
+                        self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar()
                 
             
             
@@ -89,10 +91,10 @@ class Juego:
 
     def setear_pantalla(self):
         """Se setea los limites de la pantalla la cual va a ver el usuario"""
-        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40
-        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60
-        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30
-        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70
+        self.anchoMinimo = self.mapa.getCentroPantalla()[1] - (self.celdasPantallaTotalVertical//2) #40 X
+        self.anchoMaximo = self.mapa.getCentroPantalla()[1] + (self.celdasPantallaTotalVertical//2) #60 X
+        self.largoMinimo = self.mapa.getCentroPantalla()[0] - (self.celdasPantallaTotalHorizontal // 2) #30 Y
+        self.largoMaximo = self.mapa.getCentroPantalla()[0] + (self.celdasPantallaTotalHorizontal // 2) #70 Y
         return self.anchoMinimo, self.anchoMaximo, self.largoMinimo, self.largoMaximo
           
 

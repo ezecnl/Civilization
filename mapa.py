@@ -82,6 +82,8 @@ class Mapa():
         return self.centroPantallaX, self.centroPantallaY
         
 
+    
+
     def descubirMapa(self, posPersonajeY, posPersonajeX, visibilidad):
         """Se descubre el mapa a medida que el personaje avanza"""
         for y in range((posPersonajeY + visibilidad), (posPersonajeY - visibilidad)):

@@ -38,6 +38,8 @@ class Celda:
     def eliminar_personaje(self):
         self.personaje=None
 
+    
+
     def isSpawn (self):
         if not self.recurso:
             return True
@@ -48,5 +50,14 @@ class Celda:
     def get_personaje(self):
         return self.personaje
     
+    def minar(self):
+        recurso_minar=self.get_recurso()
+        tipo,cantidad=recurso_minar.minado()
+        self.recurso=None
+        return tipo, cantidad
+        
+        #lacelda= mapa.get_item(PosX,Posy)
+        
+
 
  

@@ -1,3 +1,4 @@
+from random import randint
 from celda import Celda
 
 class Arbol(Celda):
@@ -8,5 +9,8 @@ class Arbol(Celda):
         self.url_imagen = "imagenes/arbol_nuevo.png"
 
     def minado(self):
-        pass
+        madera= randint(self.cantidadMaderaOtorgada)
+        
+        return madera,"Madera"
+        
 
