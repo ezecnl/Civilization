@@ -2,6 +2,7 @@ from random import randint
 import numpy as np
 from celda import Celda
 from montaña import Montaña
+from obrero import Obrero
 from tierra import Tierra
 from water import Agua
 from personaje import Personaje
@@ -15,12 +16,12 @@ class Mapa():
         self.centroPantallaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion 
-        self.personaje = self.crear_personaje(celdastotaleXPantalla,celdastotalesYPantalla)
+        self.personaje = self.crear_personaje(Personaje,celdastotaleXPantalla,celdastotalesYPantalla)
         
 
-    def crear_personaje(self, celdas_totales_pantallax, celdas_totales_pantallay):
+    def crear_personaje(self,personaje, celdas_totales_pantallax, celdas_totales_pantallay):
          spawn = self.playerSpawn(celdas_totales_pantallax,celdas_totales_pantallay) #aparece en el centro de una celda
-         objeto_personaje= Personaje(spawn) #al objeto personaje se le pasa la posicion de spawn
+         objeto_personaje= personaje(spawn) #al objeto personaje se le pasa la posicion de spawn
          self.mapa[spawn[0]][spawn[1]].set_personaje(objeto_personaje)#setea al objeto personaje en una celda predeterminada
          return objeto_personaje
 

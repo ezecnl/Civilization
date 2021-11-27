@@ -9,6 +9,7 @@ class Vaca(Celda):
         self.tiempoParaMatar = 10
         self.cantidadComidaOtorgada = [60, 50, 70]
 
+    
 
     def muerta(self):
         pass

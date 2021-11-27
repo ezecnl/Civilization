@@ -11,7 +11,11 @@ class Personaje:
         self._sprite = None
         self.posX = posicion[1]
         self.posY = posicion[0]
-    
+        self.inventario = {"Comida": 0,"Madera":0,"Piedra":0,"Hierro":0 }
+
+    def agregar_inventario(self,material,cantidad):
+        self.inventario[material] += cantidad 
+
     def set_sprite(self, sprite):
         """Seteo el sprite"""
         self._sprite = sprite

@@ -1,3 +1,5 @@
+from math import radians
+from random import randint, choice
 from celda import Celda
 
 
@@ -11,6 +13,16 @@ class Piedra(Celda):
 
 
     def minado(self):
-        pass
+        material=["Hierro","Piedra"]
+        aleatorio= choice(material)
+        print(aleatorio)
+        if aleatorio=="Hierro":
+            hierro= self.cantidadHierroOtorgado[randint(0,4)]
+            return aleatorio,hierro
+        if aleatorio=="Piedra":
+            piedra= self.cantidadPiedraOtorgada[randint(0,4)]
+            return aleatorio,piedra
+        
+        
 
     

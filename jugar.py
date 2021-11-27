@@ -14,6 +14,7 @@ class Juego:
         self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
         self.juego_empezo = False
         self.ir_mapas= False
+        self.poder_minar=False
         
         self.jugar()
  
@@ -46,15 +47,19 @@ class Juego:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3:
                         if self.juego_empezo== True:
-
+                            print(self.mapa.get_personaje().get_pos(),self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_recurso())
                             if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
+                                self.poder_minar=True
                                 self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
                                 #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
-                                print(self.mapa.get_personaje().get_pos())
+                                
                          
                     elif event.button == 1: 
-                        self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar()
-                
+                        if self.poder_minar==True:
+                            
+                            self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar(self.mapa.get_personaje())
+                            print(self.mapa.get_personaje().inventario)
+                            self.vista.mostrar_mapa()
             
             
                       

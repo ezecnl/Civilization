@@ -87,7 +87,7 @@ class Vista:
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
 
-    def dibujar_personaje(self,posX,posY):
+    #def dibujar_personaje(self,posX,posY):
 
         self.screen.blit(self.mapa.get_personaje().get_sprite(),(posX,posY))
 

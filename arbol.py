@@ -9,8 +9,9 @@ class Arbol(Celda):
         self.url_imagen = "imagenes/arbol_nuevo.png"
 
     def minado(self):
-        madera= randint(self.cantidadMaderaOtorgada)
+        madera= self.cantidadMaderaOtorgada[randint(0, 3)]
         
-        return madera,"Madera"
+        return "Madera",madera
+        
         
 
