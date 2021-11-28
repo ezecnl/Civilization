@@ -8,6 +8,9 @@ class Arbusto(Celda):
         self.cantidadComidaOtorgada = [60, 20, 50, 70, 35]
         self.url_imagen= "imagenes/arbusto_nuevo.png"
 
+    def esPicable(self):
+        return True
+
     def minado(self):
         
         comida= self.cantidadComidaOtorgada[randint(0, 4)]

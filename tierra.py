@@ -36,7 +36,10 @@ class Tierra(Celda):
             return True
         else:
             return False
-    
+
+    def esPicable(self):
+        return False
+
     def get_recurso(self):
         return self.recurso
 

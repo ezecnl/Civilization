@@ -10,6 +10,8 @@ class Montaña(Celda):
         self.url_imagen = "imagenes/montaña.jpg"
         self.set_piedra()
     
+    def esPicable(self):
+        return False
 
     def isSpawnable(self):
         return False

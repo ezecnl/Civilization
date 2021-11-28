@@ -21,6 +21,7 @@ class Vista:
         self.mapa = mapa_actual
         self.fuente= pygame.font.SysFont("Gill Sans",60, bold=True, italic=False)
         self.fuente_secundaria=  pygame.font.SysFont("Gill Sans", 30, bold=False, italic=False)
+        self.fuente_terciaria=pygame.font.SysFont("Gill Sans", 20, bold=False, italic=False)
         self.limites_actualizados(limites)
         self.cargar_sprites()
         self.controlador = controlador
@@ -105,8 +106,18 @@ class Vista:
                     self.controlador.empezar_juego()
                 if pantalla=="como_jugar":
                     pass
+                if pantalla=="reclutar":
+                    self.controlador.mostrar_menu_personajes()
                 if pantalla=="prejuego":
                     self.controlador.menu_mapa()
+                if pantalla=="aldeano":
+                    self.controlador.aldeano()
+                if pantalla=="guerrero":
+                    self.controlador.guerrero()
+                if pantalla=="fundador":
+                    self.controlador.fundador()
+                if pantalla=="cancelar_personajes":
+                    self.controlador.ocultar_menu_personaje()
                     
         
     def menu_principal(self):
@@ -153,6 +164,49 @@ class Vista:
         self.screen.blit(mapa_aleatorio_escalado,(50,50))
         self.screen.blit(mapa1_escalado,(300,50))
         self.screen.blit(mapa2_escalado,(550,50))
+
+    def menu_personajes(self):
+        fondo= pygame.image.load('Imagenes/Menu_personajes.png')
+        self.screen.blit(fondo,(600,0))
+        self.boton(631,59,162,44,action=self.click,pantalla="aldeano")
+        self.boton(631,157,162,44,action=self.click,pantalla="guerrero")
+        self.boton(631,251,162,44,action=self.click,pantalla="fundador")
+        self.boton(655,336,106,29,action=self.click,pantalla="cancelar_personajes")
+
+    def menu_en_juego(self):
+         comida=self.mapa.get_personaje().inventario["Comida"]
+         inventario_comida= self.fuente_terciaria.render(str(comida), True, (0,0,0))
+         texto_comida= self.fuente_terciaria.render("Comida", True, (0,0,0))
+
+         madera=self.mapa.get_personaje().inventario["Madera"]
+         inventario_madera= self.fuente_terciaria.render(str(madera), True, (0,0,0))
+         texto_madera= self.fuente_terciaria.render("Madera", True, (0,0,0))
+
+         piedra=self.mapa.get_personaje().inventario["Piedra"]
+         inventario_piedra= self.fuente_terciaria.render(str(piedra), True, (0,0,0))
+         texto_piedra= self.fuente_terciaria.render("piedra", True, (0,0,0))
+
+         hierro=self.mapa.get_personaje().inventario["Hierro"]
+         inventario_hierro= self.fuente_terciaria.render(str(hierro), True, (0,0,0))
+         texto_hierro= self.fuente_terciaria.render("Hierro", True, (0,0,0))
+
+         reclutar= pygame.image.load('Imagenes/boton_reclutar.png')
+
+         self.screen.blit(inventario_comida,(75,0))
+         self.screen.blit(texto_comida,(10,0))
+
+         self.screen.blit(inventario_madera,(175,0))
+         self.screen.blit(texto_madera,(110,0))
+
+         self.screen.blit(inventario_piedra,(275,0))
+         self.screen.blit(texto_madera,(210,0))
+
+         self.screen.blit(inventario_hierro,(375,0))
+         self.screen.blit(texto_madera,(310,0))
+
+         self.screen.blit(reclutar,(20,350))
+         self.boton(20,350,30,30,action=self.click,pantalla="reclutar")
+         
         
         
 

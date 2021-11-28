@@ -7,7 +7,7 @@ class Personaje:
         self.velocidad = None
         self.celdas_visibles = 4
         self.comida = None
-        self.url_imagen = "Tropas y personajes/GraveRobber.png"
+        self.url_imagen = None
         self._sprite = None
         self.posX = posicion[1]
         self.posY = posicion[0]

@@ -1,4 +1,6 @@
 import pygame
+from aldeano import Aldeano
+from guerrero import Guerrero
 from vista import Vista
 from mapa import Mapa
 
@@ -13,11 +15,43 @@ class Juego:
         self.mapa = Mapa() # es el modelo
         self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
         self.juego_empezo = False
-        self.ir_mapas= False
-        self.poder_minar=False
-        
+        self.ir_mapas= False #menu principal
+        #self.poder_minar=False #menu principal
+        self.crear_aldeano= False #menu personajes
+        self.crear_guerrero=False #menu personajes
+        self.crear_fundador=False #menu personajes
+        self.reclutar_personaje=False #menu personajes
+        self.personaje_seleccionado=self.mapa.get_personaje()
+
+
         self.jugar()
- 
+    
+    def fundador(self):
+        #self.crear_fundador = True
+        self.crear_fundador=False
+        
+
+
+    def guerrero(self):
+        self.crear_guerrero = True
+        self.crear_guerrero=False
+
+    def aldeano(self):
+        self.mapa.crear_personaje(Aldeano,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)
+        print(self.mapa.get_personaje().get_pos())
+        self.vista.mostrar_mapa()
+        #self.crear_aldeano= True
+        #self.crear_aldeano=False
+
+    def ocultar_menu_personaje(self):
+        self.reclutar_personaje=False
+        
+
+    def mostrar_menu_personajes(self):
+        self.reclutar_personaje=True
+
+    
+
     def empezar_juego(self):
         self.juego_empezo = True
 
@@ -30,14 +64,24 @@ class Juego:
                self.vista.menu_mapa()
             else:
                 self.vista.mostrar_mapa()
-                
+                self.vista.menu_en_juego()
+                if self.reclutar_personaje==True:
+                    self.vista.menu_personajes()
 
             if not self.ir_mapas:
                 self.vista.menu_principal()
             
+            if self.crear_aldeano==True:
+                self.mapa.crear_personaje(Aldeano,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#deberia crear un nuevo peronaja pero no anda
+                
+            if self.crear_guerrero==True:
+                #self.mapa.guerrero
+                self.mapa.crear_personaje(Guerrero,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#no anda
+                
+            if self.crear_fundador==True:#no anda
+                self.mapa.fundador
 
             for event in pygame.event.get():
-                
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
@@ -46,16 +90,19 @@ class Juego:
                     self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3:
-                        if self.juego_empezo== True:
-                            print(self.mapa.get_personaje().get_pos(),self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_recurso())
-                            if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
-                                self.poder_minar=True
-                                self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
-                                #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
-                                
-                         
+                        if self.juego_empezo== True:#si ya se muestra el mapa
+                            self.personaje_seleccionado=self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje()
+
                     elif event.button == 1: 
-                        if self.poder_minar==True:
+                        
+                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
+                            if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():
+                                #self.poder_minar=True
+                                self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
+                                print(self.mapa.get_personaje().get_pos(),self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_recurso())
+                                #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
+
+                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==False:#sino se puede spawnear hay un recuro picable
                             
                             self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar(self.mapa.get_personaje())
                             print(self.mapa.get_personaje().inventario)

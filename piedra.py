@@ -11,6 +11,8 @@ class Piedra(Celda):
         self.cantidadPiedraOtorgada = [40, 25, 6, 35, 60]
         self.url_imagen = "imagenes/piedra3.png"
 
+    def esPicable(self):
+        return True
 
     def minado(self):
         material=["Hierro","Piedra"]

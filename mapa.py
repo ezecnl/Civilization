@@ -1,8 +1,11 @@
 from random import randint
 import numpy as np
+from aldeano import Aldeano
 from celda import Celda
+from fundador import Fundador
+from guerrero import Guerrero
 from montaña import Montaña
-from obrero import Obrero
+from aldeano import Aldeano
 from tierra import Tierra
 from water import Agua
 from personaje import Personaje
@@ -16,7 +19,9 @@ class Mapa():
         self.centroPantallaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion 
-        self.personaje = self.crear_personaje(Personaje,celdastotaleXPantalla,celdastotalesYPantalla)
+        self.personaje = self.crear_personaje(Aldeano,celdastotaleXPantalla,celdastotalesYPantalla)
+        self.fundador= self.crear_personaje(Fundador,celdastotaleXPantalla,celdastotalesYPantalla)
+        self.guerrero=self.crear_personaje(Guerrero,celdastotaleXPantalla,celdastotalesYPantalla)
         
 
     def crear_personaje(self,personaje, celdas_totales_pantallax, celdas_totales_pantallay):
