@@ -31,6 +31,7 @@ class Vista:
 
     
     def limites_actualizados(self,limites):
+        """el rectangulo de celdas que se llega a ver"""
         self.anchoMinimo= limites[0]
         self.anchoMaximo= limites[1]
         self.largoMinimo= limites[2]
@@ -69,17 +70,12 @@ class Vista:
             forX = 0
             for x in range(self.largoMinimo, self.largoMaximo):
                 
-                self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
-                try:
-                    self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
-                except:
-                    pass
-                try:
-                    self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda , forY  * self.tamañoFotoCelda))
-                    
-                except:
-                   pass
-
+                self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))#entro en el objeto mapa, pido lo que haya en la celda,de lo que haya pido el sprite para despues blitearlo
+                
+                self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                             
+                self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda , forY  * self.tamañoFotoCelda))
+                                   
                 forX += 1
 
             forY += 1 
@@ -88,9 +84,7 @@ class Vista:
     def get_mouse_pos(self):
         return pygame.mouse.get_pos()
 
-    #def dibujar_personaje(self,posX,posY):
-
-        self.screen.blit(self.mapa.get_personaje().get_sprite(),(posX,posY))
+  
 
     
     
@@ -99,13 +93,11 @@ class Vista:
         mouse= self.get_mouse_pos()
         click = pygame.mouse.get_pressed()
 
-        if posx+ancho > mouse[0] > posx and posy+altura > mouse[1] > posy:
+        if posx+ancho > mouse[0] > posx and posy+altura > mouse[1] > posy: #si el mouse esta entre x,x+ancho e y,y+altura
             
             if click[0] == 1 != None: 
                 if pantalla=="jugar":
                     self.controlador.empezar_juego()
-                if pantalla=="como_jugar":
-                    pass
                 if pantalla=="reclutar":
                     self.controlador.mostrar_menu_personajes()
                 if pantalla=="prejuego":
@@ -199,10 +191,10 @@ class Vista:
          self.screen.blit(texto_madera,(110,0))
 
          self.screen.blit(inventario_piedra,(275,0))
-         self.screen.blit(texto_madera,(210,0))
+         self.screen.blit(texto_piedra,(210,0))
 
          self.screen.blit(inventario_hierro,(375,0))
-         self.screen.blit(texto_madera,(310,0))
+         self.screen.blit(texto_hierro,(310,0))
 
          self.screen.blit(reclutar,(20,350))
          self.boton(20,350,30,30,action=self.click,pantalla="reclutar")

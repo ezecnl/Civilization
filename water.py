@@ -11,8 +11,7 @@ class Agua(Celda):
     def isSpawnable(self):
         return False
 
-    def esPicable(self):
-        return False
+   
 
     def tiempo(self):
         return self.velocidad

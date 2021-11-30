@@ -14,6 +14,7 @@ class Personaje:
         self.inventario = {"Comida": 0,"Madera":0,"Piedra":0,"Hierro":0 }
 
     def agregar_inventario(self,material,cantidad):
+        """suma al inventario el material que se haya minado"""
         self.inventario[material] += cantidad 
 
     def set_sprite(self, sprite):

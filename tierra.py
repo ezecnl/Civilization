@@ -2,7 +2,8 @@ from celda import Celda
 import pygame
 from numpy import random
 from random import randint
-
+from arbol import Arbol
+from arbusto import Arbusto
 
 class Tierra(Celda):
     def __init__(self, is_visible=False) -> None:
@@ -19,7 +20,7 @@ class Tierra(Celda):
 
     def set_arbol(self):
         """Se setean los arboles con probabilidades"""
-        from arbol import Arbol
+        
         num = randint(9,100)
         if num > 90:
             self.recurso = Arbol()
@@ -29,7 +30,7 @@ class Tierra(Celda):
 
     def set_arbusto(self):
         """Se setean los arbustos con probabilidades"""
-        from arbusto import Arbusto
+        
         num = randint(9,100)
         if num > 96:
             self.recurso = Arbusto()
@@ -37,8 +38,7 @@ class Tierra(Celda):
         else:
             return False
 
-    def esPicable(self):
-        return False
+    
 
     def get_recurso(self):
         return self.recurso

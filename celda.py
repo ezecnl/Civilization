@@ -5,7 +5,6 @@ class Celda:
         # TODO: areglar lo de que no se vea el mapa
         self.visible = is_visible
         self.tamañaoCelda = 20
-        self.objetos = []
         self.recurso= None
         self._sprite = None
         self.url_imagen = None
@@ -42,8 +41,8 @@ class Celda:
 
     
 
-    def isSpawn (self):
-        if not self.recurso:
+    def hayRecurso (self):
+        if self.recurso:
             return True
         else:
             return False
@@ -53,13 +52,13 @@ class Celda:
         return self.personaje
     
     def minar(self, personaje):
-        print(self.recurso) 
+        """agrega en el inventario del personaje el recuro minado y lo saca de su celda"""
         tipo,cantidad=self.recurso.minado() #el recurso cuando se inicie el juego valdra algo
         personaje.agregar_inventario(tipo, cantidad)
         self.recurso=None
         
         
-        #lacelda= mapa.get_item(PosX,Posy)
+        
         
 
 

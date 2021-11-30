@@ -27,7 +27,7 @@ class Juego:
         self.jugar()
     
     def fundador(self):
-        #self.crear_fundador = True
+        self.crear_fundador = True
         self.crear_fundador=False
         
 
@@ -40,8 +40,7 @@ class Juego:
         self.mapa.crear_personaje(Aldeano,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)
         print(self.mapa.get_personaje().get_pos())
         self.vista.mostrar_mapa()
-        #self.crear_aldeano= True
-        #self.crear_aldeano=False
+        
 
     def ocultar_menu_personaje(self):
         self.reclutar_personaje=False
@@ -77,9 +76,10 @@ class Juego:
             if self.crear_guerrero==True:
                 #self.mapa.guerrero
                 self.mapa.crear_personaje(Guerrero,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#no anda
-                
+                #self.vista.mostrar_mapa()
             if self.crear_fundador==True:#no anda
                 self.mapa.fundador
+                
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -93,19 +93,16 @@ class Juego:
                         if self.juego_empezo== True:#si ya se muestra el mapa
                             self.personaje_seleccionado=self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje()
 
-                    elif event.button == 1: 
+                    elif event.button == 1: #click izquierdo
                         
-                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==True:#no se puede spawnear en los recursos
-                            if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():
-                                #self.poder_minar=True
+                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawnable()==True:#no se puede spawnear en el agua
+                            if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():#si la celda no contiene un personaje te podes mover
                                 self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
-                                print(self.mapa.get_personaje().get_pos(),self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_recurso())
-                                #self.vista.dibujar_personaje(self.mouse_posicion()[1],self.mouse_posicion()[0])
+                                
 
-                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawn()==False:#sino se puede spawnear hay un recuro picable
+                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).hayRecurso()==True:#sino se puede spawnear hay un recuro picable
                             
                             self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar(self.mapa.get_personaje())
-                            print(self.mapa.get_personaje().inventario)
                             self.vista.mostrar_mapa()
             
             
@@ -114,7 +111,7 @@ class Juego:
 
             pygame.display.flip()
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(60)#frames
         
 
     def movimiento_pantalla(self, key):
@@ -132,13 +129,11 @@ class Juego:
     def mouse_posicion(self):
         """Saco la posicion del mouse y la transformo a celda para luego mover al personaje"""
         posXMouse, posYMouse = self.vista.get_mouse_pos()
-        celdasX= self.celdasPantallaTotalHorizontal//2
-        celdasY= self.celdasPantallaTotalVertical//2
-        posXCeldas = (posXMouse//self.tamanioFotoCelda)+self.largoMinimo # Lo escala al tamaño de las celdas
-        posYCeldas = (posYMouse//self.tamanioFotoCelda)+self.anchoMinimo
+        posXCeldas = (posXMouse//self.tamanioFotoCelda)+self.largoMinimo # Lo escala al tamaño de las celdas y agrego el corrimiento de la pantalla
+        posYCeldas = (posYMouse//self.tamanioFotoCelda)+self.anchoMinimo 
         
         
-        #Todo: falta terminar lo de moverse del personaje
+        
         return (posXCeldas , posYCeldas)
 
     def setear_pantalla(self):
