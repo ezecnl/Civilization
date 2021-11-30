@@ -71,10 +71,16 @@ class Vista:
             for x in range(self.largoMinimo, self.largoMaximo):
                 
                 self.screen.blit(self.mapa.get_item(y,x).get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))#entro en el objeto mapa, pido lo que haya en la celda,de lo que haya pido el sprite para despues blitearlo
+                try:
+                    self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
+                except:
+                    pass
+                try:
+                    self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda , forY  * self.tamañoFotoCelda))
+                    
+                except:
+                   pass
                 
-                self.screen.blit(self.mapa.get_item(y,x).get_recurso().get_sprite(), (forX * self.tamañoFotoCelda, forY * self.tamañoFotoCelda))
-                             
-                self.screen.blit(self.mapa.get_item(y,x).get_personaje().get_sprite(), (forX * self.tamañoFotoCelda , forY  * self.tamañoFotoCelda))
                                    
                 forX += 1
 
