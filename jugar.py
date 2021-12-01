@@ -21,11 +21,19 @@ class Juego:
         self.crear_guerrero=False #menu personajes
         self.crear_fundador=False #menu personajes
         self.reclutar_personaje=False #menu personajes
-        self.personaje_seleccionado=self.mapa.get_personaje()
+        
 
+        self.no_mover= False
 
         self.jugar()
     
+    
+    def si_mover_personaje(self):
+        self.no_mover=False
+
+    def no_mover_personaje(self):
+        self.no_mover=True
+
     def fundador(self):
         self.crear_fundador = True
         self.crear_fundador=False
@@ -38,7 +46,7 @@ class Juego:
 
     def aldeano(self):
         self.mapa.crear_personaje(Aldeano,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)
-        print(self.mapa.get_personaje().get_pos())
+        #print(self.mapa.get_personaje().get_pos())
         self.vista.mostrar_mapa()
         
 
@@ -64,6 +72,7 @@ class Juego:
             else:
                 self.vista.mostrar_mapa()
                 self.vista.menu_en_juego()
+                
                 if self.reclutar_personaje==True:
                     self.vista.menu_personajes()
 
@@ -88,22 +97,25 @@ class Juego:
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
                     self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 3:
+                    if event.button == 3:#click derecho
                         if self.juego_empezo== True:#si ya se muestra el mapa
-                            self.personaje_seleccionado=self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje()
-
+                            self.mapa.personaje_seleccionado_ahora_mismo=self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje()
+                            print(self.mapa.personaje_seleccionado_ahora_mismo)
                     elif event.button == 1: #click izquierdo
-                        
-                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawnable()==True:#no se puede spawnear en el agua
-                            if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():#si la celda no contiene un personaje te podes mover
-                                self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
-                                
 
-                        if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).hayRecurso()==True:#sino se puede spawnear hay un recuro picable
-                            
-                            self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar(self.mapa.get_personaje())
-                            self.vista.mostrar_mapa()
+                        if self.no_mover== False:
+                            if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawnable()==True:#no se puede spawnear en el agua
+                                if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():#si la celda no contiene un personaje te podes mover
+                                    #self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
+                                    self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mouse_posicion(),self.mapa)
+                                    print(self.mouse_posicion()[1],self.mouse_posicion()[0])
+
+                            if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).hayRecurso()==True:#sino se puede spawnear hay un recuro picable
+                    
+                                self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).minar(self.mapa.personaje_seleccionado_ahora_mismo)
+                                self.vista.mostrar_mapa()
             
             
                       

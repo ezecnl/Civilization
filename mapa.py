@@ -22,12 +22,15 @@ class Mapa():
         self.personaje = self.crear_personaje(Aldeano,celdastotaleXPantalla,celdastotalesYPantalla)
         self.fundador= self.crear_personaje(Fundador,celdastotaleXPantalla,celdastotalesYPantalla)
         self.guerrero=self.crear_personaje(Guerrero,celdastotaleXPantalla,celdastotalesYPantalla)
+        self.personaje_seleccionado_ahora_mismo = self.personaje
         
 
     def crear_personaje(self,personaje, celdas_totales_pantallax, celdas_totales_pantallay):
          spawn = self.playerSpawn(celdas_totales_pantallax,celdas_totales_pantallay) #aparece en el centro de una celda
          objeto_personaje= personaje(spawn) #al objeto personaje se le pasa la posicion de spawn
+         #self.get_mapa().set_personaje(objeto_personaje)
          self.mapa[spawn[0]][spawn[1]].set_personaje(objeto_personaje)#setea al objeto personaje en una celda predeterminada
+         print(objeto_personaje.get_pos())
          return objeto_personaje
 
     def maximo_minimo_pantalla(self):

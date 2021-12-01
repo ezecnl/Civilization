@@ -105,6 +105,7 @@ class Vista:
                 if pantalla=="jugar":
                     self.controlador.empezar_juego()
                 if pantalla=="reclutar":
+                    self.controlador.no_mover_personaje()
                     self.controlador.mostrar_menu_personajes()
                 if pantalla=="prejuego":
                     self.controlador.menu_mapa()
@@ -116,6 +117,7 @@ class Vista:
                     self.controlador.fundador()
                 if pantalla=="cancelar_personajes":
                     self.controlador.ocultar_menu_personaje()
+                    self.controlador.si_mover_personaje()
                     
         
     def menu_principal(self):
@@ -172,19 +174,19 @@ class Vista:
         self.boton(655,336,106,29,action=self.click,pantalla="cancelar_personajes")
 
     def menu_en_juego(self):
-         comida=self.mapa.get_personaje().inventario["Comida"]
+         comida=self.mapa.personaje_seleccionado_ahora_mismo.inventario["Comida"]
          inventario_comida= self.fuente_terciaria.render(str(comida), True, (0,0,0))
          texto_comida= self.fuente_terciaria.render("Comida", True, (0,0,0))
 
-         madera=self.mapa.get_personaje().inventario["Madera"]
+         madera=self.mapa.personaje_seleccionado_ahora_mismo.inventario["Madera"]
          inventario_madera= self.fuente_terciaria.render(str(madera), True, (0,0,0))
          texto_madera= self.fuente_terciaria.render("Madera", True, (0,0,0))
 
-         piedra=self.mapa.get_personaje().inventario["Piedra"]
+         piedra=self.mapa.personaje_seleccionado_ahora_mismo.inventario["Piedra"]
          inventario_piedra= self.fuente_terciaria.render(str(piedra), True, (0,0,0))
          texto_piedra= self.fuente_terciaria.render("piedra", True, (0,0,0))
 
-         hierro=self.mapa.get_personaje().inventario["Hierro"]
+         hierro=self.mapa.personaje_seleccionado_ahora_mismo.inventario["Hierro"]
          inventario_hierro= self.fuente_terciaria.render(str(hierro), True, (0,0,0))
          texto_hierro= self.fuente_terciaria.render("Hierro", True, (0,0,0))
 
