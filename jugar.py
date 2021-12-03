@@ -101,7 +101,7 @@ class Juego:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3:#click derecho
                         if self.juego_empezo== True:#si ya se muestra el mapa
-                            self.mapa.personaje_seleccionado_ahora_mismo=self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje()
+                            self.mapa.personaje_seleccionado_ahora_mismo=self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje()#seleccion del personaje que voy a mover  
                             print(self.mapa.personaje_seleccionado_ahora_mismo)
                     elif event.button == 1: #click izquierdo
 

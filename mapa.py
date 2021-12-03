@@ -36,22 +36,28 @@ class Mapa():
          return objeto_personaje
 
     def llenar_lista(self,posx,posy):
-        mas_uno=1
+        """llena la lista de posiciones para llegar a una nueva celda, solo funciona si se mueve hacia adelante"""
+        #no suma a la lista ni hace la suma en la coordenada ,nose el porque
         
-        posicion_actualY,posicion_actualX= self.personaje_seleccionado_ahora_mismo.get_pos()
-        if posx != posicion_actualX and posy== posicion_actualY:
-            for x in range(posicion_actualX-posx):
-                nueva_X=mas_uno+posicion_actualX
-                nueva_posicion=nueva_X+1,posy
+        posicion_actual= self.personaje_seleccionado_ahora_mismo.get_pos()
+
+        if posx > posicion_actual[1] and posy== posicion_actual[0]:
+            for x in range(posicion_actual[1]-posx):
+                nueva_X=(posicion_actual[1]+1)
+
+                nueva_posicion=nueva_X,posy
+
                 self.posiciones.append(nueva_posicion)
+                
             print(self.posiciones)
 
                 
-        if posy != posicion_actualY and  posx== posicion_actualX:
-            for y in range(posicion_actualY-posy):
-                nueva_Y=posicion_actualY+mas_uno
-                nueva_posicion=posx+1,nueva_Y
-                print(nueva_posicion)
+        if posy > posicion_actual[0] and  posx== posicion_actual[1]:
+            for y in range(posicion_actual[0]-posy):
+                nueva_Y=posicion_actual[0]+1
+
+                nueva_posicion=(posicion_actual[1],nueva_Y)
+                
                 self.posiciones.append(nueva_posicion)
             print(self.posiciones)
 
