@@ -32,6 +32,9 @@ class Personaje:
     def get_pos(self):
         return self.posY, self.posX
     
+    
+
+
     def mover_personaje(self, posicionNueva,mapa):
         """Elimino al personaje de su celda anterior para moverlo a la nueva"""
         elmapa=mapa.get_mapa()

@@ -23,6 +23,8 @@ class Mapa():
         self.fundador= self.crear_personaje(Fundador,celdastotaleXPantalla,celdastotalesYPantalla)
         self.guerrero=self.crear_personaje(Guerrero,celdastotaleXPantalla,celdastotalesYPantalla)
         self.personaje_seleccionado_ahora_mismo = self.personaje
+        self.posiciones=[]
+        
         
 
     def crear_personaje(self,personaje, celdas_totales_pantallax, celdas_totales_pantallay):
@@ -32,6 +34,26 @@ class Mapa():
          self.mapa[spawn[0]][spawn[1]].set_personaje(objeto_personaje)#setea al objeto personaje en una celda predeterminada
          print(objeto_personaje.get_pos())
          return objeto_personaje
+
+    def llenar_lista(self,posx,posy):
+        mas_uno=1
+        
+        posicion_actualY,posicion_actualX= self.personaje_seleccionado_ahora_mismo.get_pos()
+        if posx != posicion_actualX and posy== posicion_actualY:
+            for x in range(posicion_actualX-posx):
+                nueva_X=mas_uno+posicion_actualX
+                nueva_posicion=nueva_X+1,posy
+                self.posiciones.append(nueva_posicion)
+            print(self.posiciones)
+
+                
+        if posy != posicion_actualY and  posx== posicion_actualX:
+            for y in range(posicion_actualY-posy):
+                nueva_Y=posicion_actualY+mas_uno
+                nueva_posicion=posx+1,nueva_Y
+                print(nueva_posicion)
+                self.posiciones.append(nueva_posicion)
+            print(self.posiciones)
 
     def maximo_minimo_pantalla(self):
 

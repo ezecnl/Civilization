@@ -9,3 +9,6 @@ class Fundador(Personaje):
 
     def fundar_ciudad(self):
         pass
+
+    def poder_picar(self):
+        return False

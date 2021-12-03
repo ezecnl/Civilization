@@ -7,6 +7,8 @@ class Aldeano(Personaje):
         self.url_imagen="Tropas y personajes/Boy.png"
         
         
+    def poder_picar(self):
+        return True
         
     
 
