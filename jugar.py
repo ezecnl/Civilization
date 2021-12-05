@@ -113,8 +113,9 @@ class Juego:
                                     if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():#si la celda no contiene un personaje te podes mover
                                         #self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
                                         self.mapa.llenar_lista(self.mouse_posicion()[0],self.mouse_posicion()[1])
-                                        self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mouse_posicion(),self.mapa)
-                                        print(self.mouse_posicion()[1],self.mouse_posicion()[0])
+                                        #self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mouse_posicion(),self.mapa)
+                                        self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mapa.posiciones,self.mapa)
+                                        print(self.mouse_posicion()[0],self.mouse_posicion()[1])
 
                             if self.mapa.personaje_seleccionado_ahora_mismo.poder_picar()== True:
                                    

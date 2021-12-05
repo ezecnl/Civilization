@@ -40,26 +40,40 @@ class Mapa():
         #no suma a la lista ni hace la suma en la coordenada ,nose el porque
         
         posicion_actual= self.personaje_seleccionado_ahora_mismo.get_pos()
+        coordenada=(posx,posy)
 
-        if posx > posicion_actual[1] and posy== posicion_actual[0]:
-            for x in range(posicion_actual[1]-posx):
-                nueva_X=(posicion_actual[1]+1)
+        
 
-                nueva_posicion=nueva_X,posy
-
-                self.posiciones.append(nueva_posicion)
+        if posx >= posicion_actual[1] and posy== posicion_actual[0]:
+            print("posiciones",posx,posicion_actual[1])
+            print("resta",posx-posicion_actual[1])
+            for x in range(posx-posicion_actual[1]):
+                
+                nueva_X=(posicion_actual[1]+1+x)
+                
+                nueva_posicion_moviendoteX=nueva_X,posy
+                print("chequeo for", nueva_X)
+                
+                self.personaje_seleccionado_ahora_mismo.mover_personaje(nueva_posicion_moviendoteX,self)
+                self.posiciones.append(nueva_posicion_moviendoteX)
+                
                 
             print(self.posiciones)
 
                 
-        if posy > posicion_actual[0] and  posx== posicion_actual[1]:
-            for y in range(posicion_actual[0]-posy):
-                nueva_Y=posicion_actual[0]+1
+        elif posy >= posicion_actual[0] and  posx== posicion_actual[1]:
+            print("chequeo",posicion_actual[0],posy)
+            for y in range(posy-posicion_actual[0]):
+                print("chequeo for")
+                nueva_Y=posicion_actual[0]+1+y
 
-                nueva_posicion=(posicion_actual[1],nueva_Y)
+                nueva_posicion_moviendoteY=(posicion_actual[1],nueva_Y)
+                print(nueva_Y)
+                self.personaje_seleccionado_ahora_mismo.mover_personaje(nueva_posicion_moviendoteY,self)
                 
-                self.posiciones.append(nueva_posicion)
+
             print(self.posiciones)
+        self.personaje_seleccionado_ahora_mismo.mover_personaje(coordenada,self)
 
     def maximo_minimo_pantalla(self):
 

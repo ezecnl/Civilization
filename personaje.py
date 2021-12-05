@@ -46,20 +46,24 @@ class Personaje:
         laceldanueva=elmapa[self.posY][self.posX]
         laceldanueva.set_personaje(self)
 
-        #lista=mapa.posiciones
-        #total_de_celdas_recorridas= len(lista)
+          #para limpiar la lista despues de llegar a la nueva celda
+
+        #total_de_celdas_recorridas= len(listaPosicionesNuevas)
 
         #for posicion in range(total_de_celdas_recorridas):#va a mover al personaje la cantidad de coordenadas que haya en la lista
             #elmapa=mapa.get_mapa()
             #laceldaanterior=elmapa[self.posY][self.posX]
             #laceldaanterior.eliminar_personaje()
-            #self.posY = posicionNueva[1]
-            #self.posX = posicionNueva[0]
+
+            #posicion_X,posicion_Y=listaPosicionesNuevas[posicion]
+
+            #self.posY = posicion_Y[1]
+            #self.posX = posicion_X[0]
 
             #laceldanueva=elmapa[self.posY][self.posX]
             #laceldanueva.set_personaje(self)
         
-        #lista=[]  #para limpiar la lista despues de llegar a la nueva celda
+        
 
         
         
