@@ -1,4 +1,5 @@
 import pygame
+import time
 from aldeano import Aldeano
 from guerrero import Guerrero
 from vista import Vista
@@ -81,11 +82,12 @@ class Juego:
             
             if self.crear_aldeano==True:
                 self.mapa.crear_personaje(Aldeano,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#deberia crear un nuevo peronaja pero no anda
-                
+                pygame.display.update()
             if self.crear_guerrero==True:
                 #self.mapa.guerrero
                 self.mapa.crear_personaje(Guerrero,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#no anda
                 #self.vista.mostrar_mapa()
+                
             if self.crear_fundador==True:#no anda
                 self.mapa.fundador
                 
@@ -114,8 +116,9 @@ class Juego:
                                         #self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
                                         self.mapa.llenar_lista(self.mouse_posicion()[0],self.mouse_posicion()[1])
                                         #self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mouse_posicion(),self.mapa)
-                                        self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mapa.posiciones,self.mapa)
-                                        print(self.mouse_posicion()[0],self.mouse_posicion()[1])
+                                        #self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mapa.posiciones,self.mapa)
+                                        self.movimientos_por_celdas()
+                                        #print(self.mouse_posicion()[0],self.mouse_posicion()[1])
 
                             if self.mapa.personaje_seleccionado_ahora_mismo.poder_picar()== True:
                                    
@@ -131,6 +134,23 @@ class Juego:
             pygame.display.flip()
             pygame.display.update()
             self.clock.tick(60)#frames
+        
+    def movimientos_por_celdas(self):
+        lista= self.mapa.posiciones
+        total_de_celdas_recorridas= len(lista)
+        
+        for posicion in range (total_de_celdas_recorridas):
+
+            self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(lista[posicion],self.mapa)             
+            print("posicion",lista[posicion])        
+            time.sleep(0.5)
+            self.vista.mostrar_mapa() 
+            pygame.display.update()
+         
+            
+           
+        
+        self.mapa.posiciones=[]    
         
 
     def movimiento_pantalla(self, key):

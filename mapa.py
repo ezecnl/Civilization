@@ -37,43 +37,39 @@ class Mapa():
 
     def llenar_lista(self,posx,posy):
         """llena la lista de posiciones para llegar a una nueva celda, solo funciona si se mueve hacia adelante"""
-        #no suma a la lista ni hace la suma en la coordenada ,nose el porque
-        
         posicion_actual= self.personaje_seleccionado_ahora_mismo.get_pos()
-        coordenada=(posx,posy)
+        if posx < posicion_actual[1] and posy== posicion_actual[0]:# X atras
+            for x in range(posicion_actual[1]-posx):
+                nueva_X_atras=(posicion_actual[1]-1-x)
+                nueva_posicion_moviendoteX_atras=nueva_X_atras,posy
+                self.posiciones.append(nueva_posicion_moviendoteX_atras)
+                
+
+                
+
+        if posx > posicion_actual[1] and posy== posicion_actual[0]:# X adelante
+            for x in range(posx-posicion_actual[1]):
+                nueva_X_adelante=(posicion_actual[1]+1+x)
+                nueva_posicion_moviendoteX_adelante=nueva_X_adelante,posy
+                self.posiciones.append(nueva_posicion_moviendoteX_adelante)
+                
+        if posy > posicion_actual[0] and  posx== posicion_actual[1]:# Y adelante
+            for y in range(posy-posicion_actual[0]):
+                nueva_Y_adelante=posicion_actual[0]+1+y
+                nueva_posicion_moviendoteY_adelante=(posicion_actual[1],nueva_Y_adelante)
+                self.posiciones.append(nueva_posicion_moviendoteY_adelante)
+        
+        if posy < posicion_actual[0] and  posx== posicion_actual[1]:# Y atras
+            for y in range(posicion_actual[0]-posy):
+                nueva_Y_atras=posicion_actual[0]-1-y
+                nueva_posicion_moviendoteY_atras=(posicion_actual[1],nueva_Y_atras)
+                self.posiciones.append(nueva_posicion_moviendoteY_atras)
+                
+        if posx != posicion_actual[1] or posy !=posicion_actual[0]:
+            teletransportacion= posx,posy
+            self.posiciones.append(teletransportacion)
 
         
-
-        if posx >= posicion_actual[1] and posy== posicion_actual[0]:
-            print("posiciones",posx,posicion_actual[1])
-            print("resta",posx-posicion_actual[1])
-            for x in range(posx-posicion_actual[1]):
-                
-                nueva_X=(posicion_actual[1]+1+x)
-                
-                nueva_posicion_moviendoteX=nueva_X,posy
-                print("chequeo for", nueva_X)
-                
-                self.personaje_seleccionado_ahora_mismo.mover_personaje(nueva_posicion_moviendoteX,self)
-                self.posiciones.append(nueva_posicion_moviendoteX)
-                
-                
-            print(self.posiciones)
-
-                
-        elif posy >= posicion_actual[0] and  posx== posicion_actual[1]:
-            print("chequeo",posicion_actual[0],posy)
-            for y in range(posy-posicion_actual[0]):
-                print("chequeo for")
-                nueva_Y=posicion_actual[0]+1+y
-
-                nueva_posicion_moviendoteY=(posicion_actual[1],nueva_Y)
-                print(nueva_Y)
-                self.personaje_seleccionado_ahora_mismo.mover_personaje(nueva_posicion_moviendoteY,self)
-                
-
-            print(self.posiciones)
-        self.personaje_seleccionado_ahora_mismo.mover_personaje(coordenada,self)
 
     def maximo_minimo_pantalla(self):
 

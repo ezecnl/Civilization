@@ -1,4 +1,5 @@
 import pygame
+import time
 
 class Personaje:
     def __init__(self, posicion):
@@ -37,31 +38,36 @@ class Personaje:
 
     def mover_personaje(self, posicionNueva,mapa):
         """Elimino al personaje de su celda anterior para moverlo a la nueva"""
-        elmapa=mapa.get_mapa()
-        laceldaanterior=elmapa[self.posY][self.posX]
-        laceldaanterior.eliminar_personaje()
-        self.posY = posicionNueva[1]
-        self.posX = posicionNueva[0]
+        if mapa.get_item(posicionNueva[1],posicionNueva[0]).hayRecurso()==False:
 
-        laceldanueva=elmapa[self.posY][self.posX]
-        laceldanueva.set_personaje(self)
+            elmapa=mapa.get_mapa()
+            laceldaanterior=elmapa[self.posY][self.posX]
+            laceldaanterior.eliminar_personaje()
+            self.posY = posicionNueva[1]
+            self.posX = posicionNueva[0]
 
-          #para limpiar la lista despues de llegar a la nueva celda
+            laceldanueva=elmapa[self.posY][self.posX]
+            laceldanueva.set_personaje(self)
 
-        #total_de_celdas_recorridas= len(listaPosicionesNuevas)
+        
 
+        #total_de_celdas_recorridas= len(posicionNueva)
+        #elmapa=mapa.get_mapa()
+        
         #for posicion in range(total_de_celdas_recorridas):#va a mover al personaje la cantidad de coordenadas que haya en la lista
-            #elmapa=mapa.get_mapa()
             #laceldaanterior=elmapa[self.posY][self.posX]
             #laceldaanterior.eliminar_personaje()
 
-            #posicion_X,posicion_Y=listaPosicionesNuevas[posicion]
+            #posicion_X,posicion_Y=posicionNueva[posicion]
 
-            #self.posY = posicion_Y[1]
-            #self.posX = posicion_X[0]
+            #self.posY = posicion_Y
+            #self.posX = posicion_X
 
             #laceldanueva=elmapa[self.posY][self.posX]
             #laceldanueva.set_personaje(self)
+            
+            #time.sleep(1)
+        #posicionNueva=[]
         
         
 
