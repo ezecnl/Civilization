@@ -1,6 +1,9 @@
+
 import pygame
 import time
+from fundador import Fundador
 from aldeano import Aldeano
+from casa import Casa
 from guerrero import Guerrero
 from vista import Vista
 from mapa import Mapa
@@ -36,29 +39,25 @@ class Juego:
         self.no_mover=True
 
     def fundador(self):
+        """al hacer verdadera la variable crea un personaje fundador"""
         self.crear_fundador = True
-        self.crear_fundador=False
-        
-
 
     def guerrero(self):
-        self.crear_guerrero = True
-        self.crear_guerrero=False
+        """al hacer verdadera la variable crea un personaje guerrero"""
+        self.crear_guerrero=True
+        
 
     def aldeano(self):
-        self.mapa.crear_personaje(Aldeano,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)
-        #print(self.mapa.get_personaje().get_pos())
-        self.vista.mostrar_mapa()
+        """al hacer verdadera la variable crea un personaje aldeano"""
+        self.crear_aldeano=True
+        
         
 
     def ocultar_menu_personaje(self):
         self.reclutar_personaje=False
         
-
     def mostrar_menu_personajes(self):
         self.reclutar_personaje=True
-
-    
 
     def empezar_juego(self):
         self.juego_empezo = True
@@ -81,17 +80,24 @@ class Juego:
                 self.vista.menu_principal()
             
             if self.crear_aldeano==True:
-                self.mapa.crear_personaje(Aldeano,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#deberia crear un nuevo peronaja pero no anda
-                pygame.display.update()
-            if self.crear_guerrero==True:
-                #self.mapa.guerrero
-                self.mapa.crear_personaje(Guerrero,self.mapa.celdastotaleXPantalla,self.mapa.celdastotalesYPantalla)#no anda
-                #self.vista.mostrar_mapa()
-                
-            if self.crear_fundador==True:#no anda
-                self.mapa.fundador
-                
+               self.mapa.crear_personaje(Aldeano,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)
+               self.vista.cargar_sprites()
+               self.crear_aldeano=False
+               
+               
 
+            if self.crear_guerrero==True:
+                self.mapa.crear_personaje(Guerrero,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)#no anda
+                self.vista.cargar_sprites()
+                self.crear_guerrero=False
+                
+                
+            if self.crear_fundador==True:
+                self.mapa.crear_personaje(Fundador,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)#no anda
+                self.vista.cargar_sprites()
+                self.crear_fundador=False
+                
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -99,7 +105,7 @@ class Juego:
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
                     self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
-
+                
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3:#click derecho
                         if self.juego_empezo== True:#si ya se muestra el mapa
@@ -113,12 +119,9 @@ class Juego:
                             if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).hayRecurso()==False:#no se puede spawnear en el agua
                                 if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawnable()==True:    
                                     if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():#si la celda no contiene un personaje te podes mover
-                                        #self.mapa.get_personaje().mover_personaje(self.mouse_posicion(),self.mapa)
                                         self.mapa.llenar_lista(self.mouse_posicion()[0],self.mouse_posicion()[1])
-                                        #self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mouse_posicion(),self.mapa)
-                                        #self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(self.mapa.posiciones,self.mapa)
                                         self.movimientos_por_celdas()
-                                        #print(self.mouse_posicion()[0],self.mouse_posicion()[1])
+                                       
 
                             if self.mapa.personaje_seleccionado_ahora_mismo.poder_picar()== True:
                                    
@@ -140,16 +143,11 @@ class Juego:
         total_de_celdas_recorridas= len(lista)
         
         for posicion in range (total_de_celdas_recorridas):
-
-            self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(lista[posicion],self.mapa)             
-            print("posicion",lista[posicion])        
-            time.sleep(0.5)
+            self.mapa.personaje_seleccionado_ahora_mismo.mover_personaje(lista[posicion],self.mapa)                   
+            time.sleep(0.25)
             self.vista.mostrar_mapa() 
             pygame.display.update()
          
-            
-           
-        
         self.mapa.posiciones=[]    
         
 

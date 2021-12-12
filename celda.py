@@ -9,6 +9,7 @@ class Celda:
         self._sprite = None
         self.url_imagen = None
         self.personaje = None
+        self.estructura= None
 
     def set_sprite(self, sprite):
         self._sprite = sprite
@@ -56,6 +57,14 @@ class Celda:
         tipo,cantidad=self.recurso.minado() #el recurso cuando se inicie el juego valdra algo
         personaje.agregar_inventario(tipo, cantidad)
         self.recurso=None
+
+    def get_estructura(self):
+        return self.estructura
+
+    def set_estructura(self,estructura):
+        self.estructura = estructura
+        
+
         
         
         

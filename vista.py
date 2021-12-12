@@ -49,6 +49,9 @@ class Vista:
                 personaje = celda.get_personaje()
                 if personaje != None:
                     personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
+                estrutura= celda.get_estructura()
+                if estrutura != None:
+                    estrutura.set_sprite(self.cargar_foto(estrutura.get_url_image()))
 
 
     def cargar_foto(self, imagen):
@@ -80,8 +83,10 @@ class Vista:
                     
                 except:
                    pass
-                
-                                   
+                try:
+                    self.screen.blit(self.mapa.get_item(y,x).get_estructura().get_sprite(),(forX * self.tamañoFotoCelda , forY  * self.tamañoFotoCelda))
+                except:
+                    pass         
                 forX += 1
 
             forY += 1 
@@ -110,11 +115,11 @@ class Vista:
                 if pantalla=="prejuego":
                     self.controlador.menu_mapa()
                 if pantalla=="aldeano":
-                    self.controlador.aldeano()
+                    self.controlador.aldeano()#crea un aldeano
                 if pantalla=="guerrero":
-                    self.controlador.guerrero()
+                    self.controlador.guerrero()#crea un guerrero
                 if pantalla=="fundador":
-                    self.controlador.fundador()
+                    self.controlador.fundador()#crea un fundador
                 if pantalla=="cancelar_personajes":
                     self.controlador.ocultar_menu_personaje()
                     self.controlador.si_mover_personaje()

@@ -9,7 +9,7 @@ from aldeano import Aldeano
 from tierra import Tierra
 from water import Agua
 from personaje import Personaje
-
+from casa import Casa
 
 
 class Mapa():
@@ -30,13 +30,18 @@ class Mapa():
     def crear_personaje(self,personaje, celdas_totales_pantallax, celdas_totales_pantallay):
          spawn = self.playerSpawn(celdas_totales_pantallax,celdas_totales_pantallay) #aparece en el centro de una celda
          objeto_personaje= personaje(spawn) #al objeto personaje se le pasa la posicion de spawn
-         #self.get_mapa().set_personaje(objeto_personaje)
          self.mapa[spawn[0]][spawn[1]].set_personaje(objeto_personaje)#setea al objeto personaje en una celda predeterminada
-         print(objeto_personaje.get_pos())
+         print(objeto_personaje.get_pos(),"primero Y despues X")
          return objeto_personaje
+    
+    def crear_estructura(self,estructura,posx,posy):
+        
+        objeto_estructura= estructura(posx,posy)
+        self.mapa[posx],[posy].set_estructura(objeto_estructura)
+        return objeto_estructura
 
     def llenar_lista(self,posx,posy):
-        """llena la lista de posiciones para llegar a una nueva celda, solo funciona si se mueve hacia adelante"""
+        """llena la lista de posiciones para llegar a una nueva celda, solo funciona si se mueve en el mismo eje"""
         posicion_actual= self.personaje_seleccionado_ahora_mismo.get_pos()
         if posx < posicion_actual[1] and posy== posicion_actual[0]:# X atras
             for x in range(posicion_actual[1]-posx):
@@ -44,9 +49,6 @@ class Mapa():
                 nueva_posicion_moviendoteX_atras=nueva_X_atras,posy
                 self.posiciones.append(nueva_posicion_moviendoteX_atras)
                 
-
-                
-
         if posx > posicion_actual[1] and posy== posicion_actual[0]:# X adelante
             for x in range(posx-posicion_actual[1]):
                 nueva_X_adelante=(posicion_actual[1]+1+x)
