@@ -34,10 +34,10 @@ class Mapa():
          print(objeto_personaje.get_pos(),"primero Y despues X")
          return objeto_personaje
     
-    def crear_estructura(self,estructura,posx,posy):
-        
-        objeto_estructura= estructura(posx,posy)
-        self.mapa[posx],[posy].set_estructura(objeto_estructura)
+    def crear_estructura(self,estructura,posicion):
+        objeto_estructura= estructura(posicion)
+        self.mapa[posicion[1]][posicion[0]].set_estructura(objeto_estructura)
+        print(objeto_estructura.get_pos(),"casa agregada")
         return objeto_estructura
 
     def llenar_lista(self,posx,posy):

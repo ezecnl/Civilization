@@ -51,7 +51,7 @@ class Vista:
                     personaje.set_sprite(self.cargar_foto(personaje.get_url_imagen()))
                 estrutura= celda.get_estructura()
                 if estrutura != None:
-                    estrutura.set_sprite(self.cargar_foto(estrutura.get_url_image()))
+                    estrutura.set_sprite(self.cargar_foto(estrutura.get_url_imagen()))
 
 
     def cargar_foto(self, imagen):
@@ -123,6 +123,8 @@ class Vista:
                 if pantalla=="cancelar_personajes":
                     self.controlador.ocultar_menu_personaje()
                     self.controlador.si_mover_personaje()
+                if pantalla=="Casa":
+                    self.controlador.casa_seleccionada()
                     
         
     def menu_principal(self):
@@ -211,6 +213,8 @@ class Vista:
 
          self.screen.blit(reclutar,(20,350))
          self.boton(20,350,30,30,action=self.click,pantalla="reclutar")
+
+         self.boton(0,0,100,50,action=self.click,pantalla="Casa")
          
         
         

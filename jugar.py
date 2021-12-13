@@ -1,6 +1,7 @@
 
 import pygame
 import time
+from estructura import Estructura
 from fundador import Fundador
 from aldeano import Aldeano
 from casa import Casa
@@ -20,18 +21,19 @@ class Juego:
         self.vista = Vista(self,self.mapa,self.celdasPantallaTotalHorizontal, self.celdasPantallaTotalVertical, self.tamanioFotoCelda, self.anchoLargoPantalla, self.setear_pantalla())
         self.juego_empezo = False
         self.ir_mapas= False #menu principal
-        #self.poder_minar=False #menu principal
         self.crear_aldeano= False #menu personajes
         self.crear_guerrero=False #menu personajes
         self.crear_fundador=False #menu personajes
         self.reclutar_personaje=False #menu personajes
-        
+        self.casa=False
 
         self.no_mover= False
 
         self.jugar()
     
-    
+    def casa_seleccionada(self):
+        self.casa=True
+
     def si_mover_personaje(self):
         self.no_mover=False
 
@@ -84,7 +86,7 @@ class Juego:
                self.vista.cargar_sprites()
                self.crear_aldeano=False
                
-               
+            
 
             if self.crear_guerrero==True:
                 self.mapa.crear_personaje(Guerrero,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)#no anda
@@ -97,7 +99,11 @@ class Juego:
                 self.vista.cargar_sprites()
                 self.crear_fundador=False
                 
-            
+            if self.casa==True:
+                self.mapa.crear_estructura(Casa,self.mouse_posicion())
+                self.vista.cargar_sprites()
+                self.casa=False
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -105,7 +111,6 @@ class Juego:
                 if event.type == pygame.KEYDOWN:
                     self.movimiento_pantalla(event.key)
                     self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
-                
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 3:#click derecho
                         if self.juego_empezo== True:#si ya se muestra el mapa
