@@ -36,9 +36,12 @@ class Mapa():
     
     def crear_estructura(self,estructura,posicion):
         objeto_estructura= estructura(posicion)
-        self.mapa[posicion[1]][posicion[0]].set_estructura(objeto_estructura)
-        print(objeto_estructura.get_pos(),"casa agregada")
-        return objeto_estructura
+        if self.personaje_seleccionado_ahora_mismo.puedo_contruir(objeto_estructura)==True:
+            self.mapa[posicion[1]][posicion[0]].set_estructura(objeto_estructura)
+            self.personaje_seleccionado_ahora_mismo.aplicar_costo(objeto_estructura)
+            print(objeto_estructura.get_pos(),"casa agregada")
+            return objeto_estructura
+        
 
     def llenar_lista(self,posx,posy):
         """llena la lista de posiciones para llegar a una nueva celda, solo funciona si se mueve en el mismo eje"""

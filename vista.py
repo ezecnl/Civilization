@@ -196,6 +196,8 @@ class Vista:
          hierro=self.mapa.personaje_seleccionado_ahora_mismo.inventario["Hierro"]
          inventario_hierro= self.fuente_terciaria.render(str(hierro), True, (0,0,0))
          texto_hierro= self.fuente_terciaria.render("Hierro", True, (0,0,0))
+         
+         texto_casa= self.fuente_terciaria.render("Construir", True, (0,0,0))
 
          reclutar= pygame.image.load('Imagenes/boton_reclutar.png')
 
@@ -214,7 +216,8 @@ class Vista:
          self.screen.blit(reclutar,(20,350))
          self.boton(20,350,30,30,action=self.click,pantalla="reclutar")
 
-         self.boton(0,0,100,50,action=self.click,pantalla="Casa")
+         self.screen.blit(texto_casa,(70,350))
+         self.boton(70,350,60,30,action=self.click,pantalla="Casa")
          
         
         

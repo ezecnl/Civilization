@@ -100,9 +100,11 @@ class Juego:
                 self.crear_fundador=False
                 
             if self.casa==True:
-                self.mapa.crear_estructura(Casa,self.mouse_posicion())
+                self.no_mover_personaje()
+                self.mapa.crear_estructura(Casa,self.mouse_posicion())   #self.mapa.crear_estructura(Casa,self.celdasPantallaTotalHorizontal,self.celdasPantallaTotalVertical)
                 self.vista.cargar_sprites()
                 self.casa=False
+                self.si_mover_personaje()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

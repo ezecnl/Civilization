@@ -18,6 +18,22 @@ class Personaje:
         """suma al inventario el material que se haya minado"""
         self.inventario[material] += cantidad 
 
+    def eliminar_del_inventario(self,material,cantidad):
+        """se le resta al inventario lo que se haya usado"""
+        self.inventario[material] -= cantidad
+
+    def aplicar_costo(self,objeto):
+        costos= objeto.costo
+        for tipo,cantidad in costos.items():
+            self.eliminar_del_inventario(tipo,cantidad)
+
+    def puedo_contruir(self,estructura):
+        construccion= True
+        for tipo,costo in estructura.costo.items():
+            if costo > self.inventario[tipo]:
+                construccion=False
+        return construccion
+
     def set_sprite(self, sprite):
         """Seteo el sprite"""
         self._sprite = sprite

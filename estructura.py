@@ -7,6 +7,9 @@ class Estructura:
         self.posX = posicion[1]
         self.posY = posicion[0]
 
+    
+
+
     def set_sprite(self, sprite):
         """Seteo el sprite"""
         self._sprite = sprite
