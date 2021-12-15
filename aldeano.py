@@ -7,9 +7,9 @@ class Aldeano(Personaje):
         self.url_imagen="Tropas y personajes/Boy.png"
         
         
-    def poder_picar(self):
-        return True
-        
+    def consumir_recurso(self,recurso):
+        tipo,cantidad=recurso.adquirir() #el recurso cuando se inicie el juego valdra algo
+        self.agregar_inventario(tipo, cantidad)        
     
 
     

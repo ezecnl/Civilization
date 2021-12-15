@@ -1,11 +1,9 @@
 
 
 class Celda:
-    def __init__(self, is_visible=True):
-        # TODO: areglar lo de que no se vea el mapa
-        self.visible = is_visible
+    def __init__(self):
         self.tamañaoCelda = 20
-        self.recurso= None
+        self.recurso= None#fuente_de_recurso
         self._sprite = None
         self.url_imagen = None
         self.personaje = None
@@ -26,8 +24,6 @@ class Celda:
     def hayCuidad(self):
         pass
     
-    def visibilizar(self):
-        self.visible = False
     
     def get_recurso(self):
         
@@ -56,7 +52,12 @@ class Celda:
         """agrega en el inventario del personaje el recuro minado y lo saca de su celda"""
         tipo,cantidad=self.recurso.minado() #el recurso cuando se inicie el juego valdra algo
         personaje.agregar_inventario(tipo, cantidad)
-        self.recurso=None
+        if self.recurso.vida != 0:
+            self.recurso.adquirir()
+        else:
+            self.recurso=None
+
+   
 
     def get_estructura(self):
         return self.estructura

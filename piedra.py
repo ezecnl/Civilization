@@ -1,7 +1,8 @@
 from math import radians
 from random import randint, choice
 from celda import Celda
-
+from roca import Roca
+from hierro import Hierro
 
 class Piedra(Celda):
     def __init__(self, is_visible=False) -> None:
@@ -12,7 +13,7 @@ class Piedra(Celda):
 
     
 
-    def minado(self):
+    def adquirir(self):
         material=["Hierro","Piedra"]
         aleatorio= choice(material)
         print(aleatorio)

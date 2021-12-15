@@ -1,5 +1,4 @@
 from random import randint
-import numpy as np
 from aldeano import Aldeano
 from celda import Celda
 from fundador import Fundador
@@ -19,12 +18,11 @@ class Mapa():
         self.centroPantallaX = cantidadColumnas // 2
         self.maximo_minimo_pantalla()
         self.mapa = self.generarMapa(cantidadFilas, cantidadColumnas, False) #Le asigno un valor a cada posicion 
-        self.personaje = self.crear_personaje(Aldeano,celdastotaleXPantalla,celdastotalesYPantalla)
+        self.aldeano = self.crear_personaje(Aldeano,celdastotaleXPantalla,celdastotalesYPantalla)
         self.fundador= self.crear_personaje(Fundador,celdastotaleXPantalla,celdastotalesYPantalla)
         self.guerrero=self.crear_personaje(Guerrero,celdastotaleXPantalla,celdastotalesYPantalla)
-        self.personaje_seleccionado_ahora_mismo = self.personaje
-        self.posiciones=[]
-        
+        self.personaje_seleccionado_ahora_mismo = self.aldeano
+        self.lista_de_personajes = [self.aldeano, self.fundador, self.guerrero]
         
 
     def crear_personaje(self,personaje, celdas_totales_pantallax, celdas_totales_pantallay):
@@ -41,39 +39,43 @@ class Mapa():
             self.personaje_seleccionado_ahora_mismo.aplicar_costo(objeto_estructura)
             print(objeto_estructura.get_pos(),"casa agregada")
             return objeto_estructura
-        
+    
+    def mover_personajes(self):
+        """permite mover a cada personaje de la lista por separado"""
+        for personajito in self.lista_de_personajes:
+            personajito.mover(self)
 
-    def llenar_lista(self,posx,posy):
-        """llena la lista de posiciones para llegar a una nueva celda, solo funciona si se mueve en el mismo eje"""
+    def calcular_lista_posiciones(self,posx,posy):
+        """llena la lista de posiciones para llegar a una nueva celda, primero se mueve en el eje x y despues en el y"""
         posicion_actual= self.personaje_seleccionado_ahora_mismo.get_pos()
-        if posx < posicion_actual[1] and posy== posicion_actual[0]:# X atras
+        posiciones = []
+        celda_nueva=posicion_actual[1],posicion_actual[0]#se va actualizando cada vez que pasa por un for,para que cuando pregunte si la posicion es mayor o menor en el eje Y estar refiriendome a la ultima posicion hecha por los for de x
+
+        if posx < posicion_actual[1] :# X atras
             for x in range(posicion_actual[1]-posx):
                 nueva_X_atras=(posicion_actual[1]-1-x)
-                nueva_posicion_moviendoteX_atras=nueva_X_atras,posy
-                self.posiciones.append(nueva_posicion_moviendoteX_atras)
+                celda_nueva=nueva_X_atras,posicion_actual[0]#actualizo la variable celda_nueva
+                posiciones.append(celda_nueva)
                 
-        if posx > posicion_actual[1] and posy== posicion_actual[0]:# X adelante
+        if posx > posicion_actual[1] :# X adelante
             for x in range(posx-posicion_actual[1]):
                 nueva_X_adelante=(posicion_actual[1]+1+x)
-                nueva_posicion_moviendoteX_adelante=nueva_X_adelante,posy
-                self.posiciones.append(nueva_posicion_moviendoteX_adelante)
+                celda_nueva=nueva_X_adelante,posicion_actual[0]#actualizo la variable celda_nueva
+                posiciones.append(celda_nueva)
                 
-        if posy > posicion_actual[0] and  posx== posicion_actual[1]:# Y adelante
-            for y in range(posy-posicion_actual[0]):
-                nueva_Y_adelante=posicion_actual[0]+1+y
-                nueva_posicion_moviendoteY_adelante=(posicion_actual[1],nueva_Y_adelante)
-                self.posiciones.append(nueva_posicion_moviendoteY_adelante)
+        if posy > celda_nueva[1] :# Y adelante
+            for y in range(posy-celda_nueva[1]):
+                nueva_Y_adelante=celda_nueva[1]+1+y
+                nueva_posicion_moviendoteY_adelante=(celda_nueva[0],nueva_Y_adelante)
+                posiciones.append(nueva_posicion_moviendoteY_adelante)
         
-        if posy < posicion_actual[0] and  posx== posicion_actual[1]:# Y atras
-            for y in range(posicion_actual[0]-posy):
-                nueva_Y_atras=posicion_actual[0]-1-y
-                nueva_posicion_moviendoteY_atras=(posicion_actual[1],nueva_Y_atras)
-                self.posiciones.append(nueva_posicion_moviendoteY_atras)
-                
-        if posx != posicion_actual[1] or posy !=posicion_actual[0]:
-            teletransportacion= posx,posy
-            self.posiciones.append(teletransportacion)
-
+        if posy < posicion_actual[0] :# Y atras
+            for y in range(celda_nueva[1]-posy):
+                nueva_Y_atras=celda_nueva[1]-1-y
+                nueva_posicion_moviendoteY_atras=(celda_nueva[0],nueva_Y_atras)
+                posiciones.append(nueva_posicion_moviendoteY_atras)
+        
+        return posiciones
         
 
     def maximo_minimo_pantalla(self):
@@ -136,7 +138,7 @@ class Mapa():
 
     
 
-    def descubirMapa(self, posPersonajeY, posPersonajeX, visibilidad):
+    #def descubirMapa(self, posPersonajeY, posPersonajeX, visibilidad):
         """Se descubre el mapa a medida que el personaje avanza"""
         for y in range((posPersonajeY + visibilidad), (posPersonajeY - visibilidad)):
             for x in range((posPersonajeX + visibilidad), (posPersonajeX - visibilidad)):
@@ -149,9 +151,7 @@ class Mapa():
         """devuelve lo que haya en una celda especifica"""
         return self.mapa[y][x]
 
-    def get_personaje(self):
-        """Devuelve al personaje que tiene la clase mapa"""
-        return self.personaje
+   
     
     
     

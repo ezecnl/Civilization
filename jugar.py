@@ -111,6 +111,8 @@ class Juego:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_t: 
+                        self.mapa.mover_personajes()
                     self.movimiento_pantalla(event.key)
                     self.vista.limites_actualizados(self.setear_pantalla())#setear nuevos llimites despues de mover la camara
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -126,8 +128,9 @@ class Juego:
                             if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).hayRecurso()==False:#no se puede spawnear en el agua
                                 if self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).isSpawnable()==True:    
                                     if not self.mapa.get_item(self.mouse_posicion()[1],self.mouse_posicion()[0]).get_personaje():#si la celda no contiene un personaje te podes mover
-                                        self.mapa.llenar_lista(self.mouse_posicion()[0],self.mouse_posicion()[1])
-                                        self.movimientos_por_celdas()
+                                        lista_posiciones = self.mapa.calcular_lista_posiciones(self.mouse_posicion()[0],self.mouse_posicion()[1])
+                                        self.mapa.personaje_seleccionado_ahora_mismo.set_posiciones_futuras(lista_posiciones)
+                                        #self.movimientos_por_celdas()
                                        
 
                             if self.mapa.personaje_seleccionado_ahora_mismo.poder_picar()== True:
